@@ -48,14 +48,14 @@ git clone https://aur.archlinux.org/paru-bin.git paru
 ( cd paru && makepkg -si --noconfirm --needed )
 rm -rf paru
 
+# Download my Artix installer
 git clone https://github.com/alansartorio/Artix-Config.git || (cd Artix-Config; git pull)
 ln -s "$(pwd)/Artix-Config/install.sh" /bin/install
 
 # Install some packages
-sudo pacman -S --noconfirm --needed pulseaudio pulseaudio-alsa ntfs-3g openssh xorg xorg-xinit wget zsh openrc-zsh-completions bspwm sxhkd feh rofi alacritty # kdeconnect connman-gtk
-paru -S --noconfirm --needed polybar siji-git ttf-unifont xorg-fonts-misc neovim
-
-paru -S --noconfirm --needed neofetch firefox dolphin cmst
+paru -S --noconfirm --needed pulseaudio pulseaudio-alsa ntfs-3g \
+		openssh xorg xorg-xinit wget zsh openrc-zsh-completions \
+		rofi alacritty neovim neofetch firefox dolphin cmst
 
 
 # Install my dotfiles
