@@ -1,12 +1,13 @@
-sudo pacman-key --init
-sudo pacman-key --populate artix
-sudo pacman -Sy
 
 # Autologin to user on boot
 if ! sudo cat /etc/init.d/agetty.tty1 | grep -Fq "agetty_options"
 then
 	sudo sed -i "/^description=.*/a agetty_options=\"--autologin $USER --noclear\"" /etc/init.d/agetty.tty1
 fi
+
+sudo pacman-key --init
+sudo pacman-key --populate artix
+sudo pacman -Sy
 
 # Add arch mirrors
 
@@ -27,10 +28,6 @@ Include = /etc/pacman.d/mirrorlist-arch
 EOF
 	sudo pacman -Sy
 fi
-
-
-echo "User is $USER"
-echo "Home is $HOME"
 
 # Font Key workaround
 keyFile="$HOME/.gnupg/gpg.conf"
