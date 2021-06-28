@@ -39,14 +39,23 @@ keyserver hkps://keyserver.ubuntu.com
 EOF
 fi
 
+cloneOrPull () {
+	repo="$1"
+    dir=${repo%.git}
+    dir=${dir##*/}
+    dir=${2:-$dir}
+	git clone "$repo" "$dir" || (cd "$dir"; git pull)
+}
+
+
 # Install paru
 sudo pacman -S --noconfirm --needed base-devel git
-git clone https://aur.archlinux.org/paru-bin.git paru
+cloneOrPull https://aur.archlinux.org/paru-bin.git paru
 ( cd paru && makepkg -si --noconfirm --needed )
 rm -rf paru
 
 # Download my Artix installer
-git clone https://github.com/alansartorio/Artix-Config.git || (cd Artix-Config; git pull)
+cloneOrPull https://github.com/alansartorio/Artix-Config.git
 ln -s "$(pwd)/Artix-Config/install.sh" /bin/install
 
 # Install some packages
@@ -56,7 +65,7 @@ paru -S --noconfirm --needed pulseaudio pulseaudio-alsa ntfs-3g \
 
 
 # Install my dotfiles
-git clone https://github.com/alansartorio/dotfiles.git .dotfiles || (cd .dotfiles; git pull)
+cloneOrPull https://github.com/alansartorio/dotfiles.git .dotfiles
 cd .dotfiles
 script/install
 script/bootstrap
