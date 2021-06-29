@@ -1,0 +1,3 @@
+[submodule "Bash-Bundler"]
+	path = Bash-Bundler
+	url = git@github.com:alansartorio/Bash-Bundler.git
