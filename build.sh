@@ -1,8 +1,8 @@
 ROOT=/var/lib/artools/buildiso/base/artix/rootfs
 
-sudo cp install.sh userInstall.sh "$ROOT/"
-artix-chroot "$ROOT" /install.sh
-sudo rm "$ROOT/"{install.sh,userInstall.sh}
+sudo cp installLive.sh "$ROOT/"
+artix-chroot "$ROOT" /installLive.sh
+sudo rm "$ROOT/installLive.sh"
 
 buildiso -p base -sc
 buildiso -p base -bc

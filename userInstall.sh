@@ -1,8 +1,15 @@
+cd ~
 
 # Autologin to user on boot
-if ! sudo cat /etc/init.d/agetty.tty1 | grep -Fq "agetty_options"
+if ! sudo cat "/etc/init.d/agetty.tty1" | grep -Fq "agetty_options"
 then
-	sudo sed -i "/^description=.*/a agetty_options=\"--autologin $USER --noclear\"" /etc/init.d/agetty.tty1
+	sudo sed -i "/^description=.*/a agetty_options=\"--autologin $USER --noclear\"" "/etc/init.d/agetty.tty1"
+fi
+
+# Set TYPEOFDEVICE environment variable
+if ! sudo cat "/etc/environment" | grep -Fq "TYPEOFDEVICE"
+then
+	echo "TYPEOFDEVICE=LIVEUSB" | sudo tee -a "/etc/environment"
 fi
 
 sudo pacman-key --init
@@ -11,11 +18,11 @@ sudo pacman -Sy
 
 # Add arch mirrors
 
-if ! sudo cat /etc/pacman.conf | grep -Fq "ARCHLINUX"
+if ! sudo cat "/etc/pacman.conf" | grep -Fq "ARCHLINUX"
 then
 	sudo pacman -S --noconfirm artix-archlinux-support
 	sudo pacman-key --populate archlinux
-	sudo tee -a /etc/pacman.conf <<"EOF"
+	sudo tee -a "/etc/pacman.conf" <<"EOF"
 # ARCHLINUX
 [extra]
 Include = /etc/pacman.d/mirrorlist-arch
@@ -26,7 +33,8 @@ Include = /etc/pacman.d/mirrorlist-arch
 #[multilib]
 #Include = /etc/pacman.d/mirrorlist-arch
 
-ParallelDownloads = 6
+[options]
+ParallelDownloads=6
 EOF
 	sudo pacman -Sy
 fi
@@ -63,7 +71,8 @@ ln -s "$(pwd)/Artix-Config/install.sh" /bin/install
 # Install some packages
 paru -S --noconfirm --needed pulseaudio pulseaudio-alsa ntfs-3g \
 		openssh xorg xorg-xinit wget zsh openrc-zsh-completions \
-		rofi alacritty neovim neofetch firefox dolphin cmst
+		rofi alacritty neovim neofetch firefox dolphin cmst		\
+		python python-pip
 
 
 # Install my dotfiles
