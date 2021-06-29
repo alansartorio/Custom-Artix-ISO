@@ -71,8 +71,7 @@ ln -s "$(pwd)/Artix-Config/install.sh" /bin/install
 # Install some packages
 paru -S --noconfirm --needed pulseaudio pulseaudio-alsa ntfs-3g \
 		openssh xorg xorg-xinit wget zsh openrc-zsh-completions \
-		rofi alacritty neovim neofetch firefox dolphin cmst		\
-		python python-pip
+		rofi alacritty neovim neofetch firefox dolphin cmst
 
 
 # Install my dotfiles
@@ -81,3 +80,4 @@ cd .dotfiles
 script/install
 script/bootstrap
 
+zsh -c ""
